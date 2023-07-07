@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.data.vo.v1.PersonVO;
+import com.example.demo.data.vo.v2.PersonVOV2;
 import com.example.demo.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +31,14 @@ public class PersonController {
     )
     public PersonVO create(@RequestBody PersonVO person) {
         return service.create(person);
+    }
+
+    @PostMapping(value = "/v2",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonVOV2 createV2(@RequestBody PersonVOV2 person) {
+        return service.createV2(person);
     }
 
     @PutMapping(
