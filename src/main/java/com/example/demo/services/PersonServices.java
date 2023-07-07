@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.data.vo.v1.PersonVO;
 import com.example.demo.exceptions.ResourceNotFoundException;
+import com.example.demo.mapper.ModelMapperLib;
 import com.example.demo.model.Person;
 import com.example.demo.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +18,30 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         logger.info("Finding all persons!");
-        return repository.findAll();
+        return ModelMapperLib.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
         logger.info("Finding one person!");
 
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
+
+        return ModelMapperLib.parseObject(entity, PersonVO.class);
     }
 
-    public Person create(Person person) {
-        logger.info("Person created!");
-        return repository.save(person);
+    public PersonVO create(PersonVO person) {
+        logger.info("PersonVO created!");
+
+        var entity = ModelMapperLib.parseObject(person, Person.class);
+        var vo = repository.save(entity);
+
+        return ModelMapperLib.parseObject(vo, PersonVO.class);
     }
 
-    public Person update(Person person) {
-        logger.info("Person updated!");
+    public PersonVO update(PersonVO person) {
+        logger.info("PersonVO updated!");
 
         var entity = repository.findById(person.getId())
                                .orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
@@ -43,11 +51,13 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(entity);
+        var vo = ModelMapperLib.parseObject(repository.save(entity), PersonVO.class);
+
+        return vo;
     }
 
     public void delete(Long id) {
-        logger.info("Person deleted!");
+        logger.info("PersonVO deleted!");
 
         var entity = repository.findById(id)
                                .orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
