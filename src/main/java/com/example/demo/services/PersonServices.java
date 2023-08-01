@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
 import com.example.demo.data.vo.v1.PersonVO;
+import com.example.demo.data.vo.v2.PersonVOV2;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.mapper.ModelMapperLib;
+import com.example.demo.mapper.custom.PersonMapper;
 import com.example.demo.model.Person;
 import com.example.demo.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
+    @Autowired
+    PersonMapper mapper;
+
     public List<PersonVO> findAll() {
         logger.info("Finding all persons!");
         return ModelMapperLib.parseListObjects(repository.findAll(), PersonVO.class);
@@ -32,7 +37,7 @@ public class PersonServices {
     }
 
     public PersonVO create(PersonVO person) {
-        logger.info("PersonVO created!");
+        logger.info("Person created!");
 
         var entity = ModelMapperLib.parseObject(person, Person.class);
         var vo = repository.save(entity);
@@ -40,8 +45,17 @@ public class PersonServices {
         return ModelMapperLib.parseObject(vo, PersonVO.class);
     }
 
+    public PersonVOV2 createV2(PersonVOV2 person) {
+        logger.info("Person created with v2!");
+
+        var entity = mapper.convertVoToEntity(person);
+        var vo = repository.save(entity);
+
+        return mapper.convertEntityToVO(vo);
+    }
+
     public PersonVO update(PersonVO person) {
-        logger.info("PersonVO updated!");
+        logger.info("Person updated!");
 
         var entity = repository.findById(person.getId())
                                .orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
@@ -57,7 +71,7 @@ public class PersonServices {
     }
 
     public void delete(Long id) {
-        logger.info("PersonVO deleted!");
+        logger.info("Person deleted!");
 
         var entity = repository.findById(id)
                                .orElseThrow(() -> new ResourceNotFoundException("No record founds for this ID"));
