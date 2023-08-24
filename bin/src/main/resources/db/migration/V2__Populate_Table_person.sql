@@ -1,0 +1,1 @@
+INSERT INTO `person` VALUES (2,'Profundezas Obscuras','Giboião','Male','Crazy'),(3,'Profundezas Obscuras','Renatão','male','Nervoso'),(4,'Profundezas Infernais, lugar mais obscuro','Giboião Primordial','male','Crazy');
