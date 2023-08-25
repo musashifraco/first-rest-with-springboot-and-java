@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.controllers.PersonController;
 import com.example.demo.data.vo.v1.PersonVO;
 import com.example.demo.data.vo.v2.PersonVOV2;
+import com.example.demo.exceptions.RequiredObjectIsNullException;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.mapper.DozerMapper;
 import com.example.demo.mapper.custom.PersonMapper;
@@ -51,6 +52,8 @@ public class PersonServices {
     }
 
     public PersonVO create(PersonVO person) throws Exception {
+        if(person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Person created!");
 
         var entity = DozerMapper.parseObject(person, Person.class);
@@ -60,6 +63,8 @@ public class PersonServices {
     }
 
     public PersonVOV2 createV2(PersonVOV2 person) {
+        if(person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Person created with v2!");
 
         var entity = mapper.convertVoToEntity(person);
@@ -69,6 +74,8 @@ public class PersonServices {
     }
 
     public PersonVO update(PersonVO person) throws Exception {
+        if(person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Person updated!");
 
         var entity = repository.findById(person.getKey())
