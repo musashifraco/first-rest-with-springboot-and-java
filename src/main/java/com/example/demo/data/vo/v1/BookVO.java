@@ -1,6 +1,5 @@
 package com.example.demo.data.vo.v1;
 
-import com.example.demo.model.Books;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
@@ -11,7 +10,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @JsonPropertyOrder({"id", "author", "launch_date", "price", "title"})
-public class BooksVO extends RepresentationModel<BooksVO> implements Serializable {
+public class BookVO extends RepresentationModel<BookVO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
@@ -26,7 +25,7 @@ public class BooksVO extends RepresentationModel<BooksVO> implements Serializabl
 
     private String title;
 
-    public BooksVO() {
+    public BookVO() {
     }
 
     public Long getKey() {
@@ -73,10 +72,10 @@ public class BooksVO extends RepresentationModel<BooksVO> implements Serializabl
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BooksVO booksVO = (BooksVO) o;
-        return Objects.equals(key, booksVO.key) && Objects.equals(author, booksVO.author) &&
-                Objects.equals(launchDate, booksVO.launchDate) &&
-                Objects.equals(price, booksVO.price) && Objects.equals(title, booksVO.title);
+        BookVO bookVO = (BookVO) o;
+        return Objects.equals(key, bookVO.key) && Objects.equals(author, bookVO.author) &&
+                Objects.equals(launchDate, bookVO.launchDate) &&
+                Objects.equals(price, bookVO.price) && Objects.equals(title, bookVO.title);
     }
 
     @Override

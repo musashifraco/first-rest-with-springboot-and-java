@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "books")
-public class Books implements Serializable {
+public class Book implements Serializable {
     private  static final long serialVersionUID = 1L;
 
     @Id
@@ -28,7 +28,7 @@ public class Books implements Serializable {
     @Column(name = "title", nullable = false, length = 250)
     private String title;
 
-    public Books() {}
+    public Book() {}
 
     public Long getId() {
         return id;
@@ -74,10 +74,10 @@ public class Books implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Books books = (Books) o;
-        return Objects.equals(id, books.id) && Objects.equals(author, books.author) &&
-                Objects.equals(launchDate, books.launchDate) && Objects.equals(price, books.price) &&
-                Objects.equals(title, books.title);
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) && Objects.equals(author, book.author) &&
+                Objects.equals(launchDate, book.launchDate) && Objects.equals(price, book.price) &&
+                Objects.equals(title, book.title);
     }
 
     @Override

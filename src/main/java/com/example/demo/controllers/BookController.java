@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.data.vo.v1.BooksVO;
+import com.example.demo.data.vo.v1.BookVO;
 import com.example.demo.data.vo.v1.PersonVO;
-import com.example.demo.services.BooksServices;
+import com.example.demo.services.BookServices;
 import com.example.demo.util.MediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -17,9 +17,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/books/v1")
-public class BooksController {
+public class BookController {
     @Autowired
-    private BooksServices service;
+    private BookServices service;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_YML, MediaType.APPLICATION_XML})
     @Operation(summary = "Finds all books",
@@ -33,7 +33,7 @@ public class BooksController {
                                          responseCode = "200",
                                          content = {@Content(mediaType = "application/json",
                                                              array = @ArraySchema(schema = @Schema(implementation = PersonVO.class)))})})
-    public List<BooksVO> findAll() {
+    public List<BookVO> findAll() {
         return service.findAll();
     }
 
@@ -53,7 +53,7 @@ public class BooksController {
                             @ApiResponse(description = "No Content",
                                          responseCode = "204",
                                          content = @Content)})
-    public BooksVO findById(@PathVariable(value = "id") Long id) {
+    public BookVO findById(@PathVariable(value = "id") Long id) {
         return service.findById(id);
     }
 
@@ -69,7 +69,7 @@ public class BooksController {
                                          responseCode = "200",
                                          content = @Content(schema = @Schema(implementation = PersonVO.class)))
                })
-    public BooksVO create(@RequestBody BooksVO book) throws Exception {
+    public BookVO create(@RequestBody BookVO book) throws Exception {
         return service.create(book);
     }
 
@@ -86,7 +86,7 @@ public class BooksController {
                                          responseCode = "200",
                                          content = @Content(schema = @Schema(implementation = PersonVO.class)))
                })
-    public BooksVO update(@RequestBody BooksVO book) throws Exception {
+    public BookVO update(@RequestBody BookVO book) throws Exception {
         return service.update(book);
     }
 
