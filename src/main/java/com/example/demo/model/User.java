@@ -49,7 +49,7 @@ public class User implements UserDetails, Serializable {
 
     }
 
-    private List<String> getRoles() {
+    public List<String> getRoles() {
         List<String> roles = new ArrayList<>();
 
         for(Permission permission: permissions) {
