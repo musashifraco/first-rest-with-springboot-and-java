@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.controllers;
 
 import com.example.demo.data.vo.v1.security.AccountCredentialsVO;
 import org.springframework.beans.factory.annotation.Autowired;
