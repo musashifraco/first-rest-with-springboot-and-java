@@ -1,15 +1,20 @@
 package com.example.demo.integrationtests.vo;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement
 public class AccountCredentialsVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     private  String username;
     private String password;
+
+    public  AccountCredentialsVO() {}
 
     public AccountCredentialsVO(String username, String password) {
         this.username = username;
