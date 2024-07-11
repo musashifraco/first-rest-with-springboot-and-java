@@ -26,11 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BookControllerJsonTest extends AbstractIntegrationTest {
-
-
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
-
     private static BookVO book;
 
     @BeforeAll
@@ -89,9 +86,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         book = persistedBook;
 
         assertNotNull(persistedBook);
-
         assertNotNull(persistedBook.getKey());
-
         assertTrue(persistedBook.getKey() > 0);
     }
 
@@ -131,8 +126,6 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(3)
     public void testFindById() throws JsonMappingException, JsonProcessingException {
-        mockBook();
-        
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .pathParam("id", book.getKey())
@@ -176,8 +169,6 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(5)
     public void testFindAll() throws JsonMappingException, JsonProcessingException {
-        mockBook();
-
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .when()
@@ -213,7 +204,6 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     @Test
     @Order(6)
     public void testFindAllWithOutToken() throws JsonMappingException, JsonProcessingException {
-
         RequestSpecification specificationWithOutToken = new RequestSpecBuilder()
                 .setBasePath("api/books/v1")
                 .setPort(TestConfigs.SERVER_PORT)
