@@ -105,6 +105,22 @@ public class PersonControllerCorsXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
+    public void testDisableByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
+        given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
+                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.WRONG_ORIGIN_EXAMPLE)
+                .pathParam("id", 2L)
+                .when()
+                .patch("{id}")
+                .then()
+                .statusCode(403)
+                .extract()
+                .body()
+                .asString();
+    }
+
+    @Test
+    @Order(4)
     public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -120,7 +136,7 @@ public class PersonControllerCorsXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     public void testDeleteWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         given().spec(specification)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.WRONG_ORIGIN_EXAMPLE)
@@ -132,7 +148,7 @@ public class PersonControllerCorsXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void testFindAllWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         mockPerson();
 

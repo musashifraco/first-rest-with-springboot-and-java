@@ -108,22 +108,6 @@ public class BookControllerCorsXmlTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    public void testEnableByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
-        given().spec(specification)
-                .contentType(TestConfigs.CONTENT_TYPE_XML)
-                .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.WRONG_ORIGIN_EXAMPLE)
-                .pathParam("id", 2L)
-                .when()
-                .patch("{id}")
-                .then()
-                .statusCode(403)
-                .extract()
-                .body()
-                .asString();
-    }
-
-    @Test
-    @Order(4)
     public void testFindByIdWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
@@ -139,7 +123,7 @@ public class BookControllerCorsXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     public void testDeleteWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         given().spec(specification)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.WRONG_ORIGIN_EXAMPLE)
@@ -151,7 +135,7 @@ public class BookControllerCorsXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(6)
+    @Order(5)
     public void testFindAllWithWrongOrigin() throws JsonMappingException, JsonProcessingException {
         mockBook();
 
