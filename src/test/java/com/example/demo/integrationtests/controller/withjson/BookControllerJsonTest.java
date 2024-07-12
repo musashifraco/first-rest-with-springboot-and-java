@@ -116,7 +116,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(16L, persistedBook.getKey());
+        assertEquals(18L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -147,7 +147,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(16L, persistedBook.getKey());
+        assertEquals(18L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
