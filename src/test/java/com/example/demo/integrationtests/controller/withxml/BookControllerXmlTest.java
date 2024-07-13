@@ -4,8 +4,8 @@ import com.example.demo.configs.TestConfigs;
 import com.example.demo.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.example.demo.integrationtests.vo.AccountCredentialsVO;
 import com.example.demo.integrationtests.vo.TokenVO;
+import com.example.demo.integrationtests.vo.pagedmodels.PagedModelBook;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -124,7 +124,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(17L, persistedBook.getKey());
+        assertEquals(1017L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -156,7 +156,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(17L, persistedBook.getKey());
+        assertEquals(1017L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -181,6 +181,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
+                .queryParams("page", 3, "size", 10, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -189,13 +190,10 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        List<BookVO> bookVOList = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-        BookVO foundBookOne = bookVOList.get(2);
+        PagedModelBook wrapper = objectMapper.readValue(content, PagedModelBook.class);
+        var people = wrapper.getContent();
+
+        BookVO foundBookOne = people.get(0);
 
         assertNotNull(foundBookOne);
         assertNotNull(foundBookOne.getKey());
@@ -204,11 +202,11 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookOne.getPrice());
         assertNotNull(foundBookOne.getLaunchDate());
 
-        assertEquals(3L, foundBookOne.getKey());
-        assertEquals("Clean Code", foundBookOne.getTitle());
-        assertEquals("Robert C. Martin", foundBookOne.getAuthor());
-        assertEquals(77.0, foundBookOne.getPrice());
-        assertEquals("Sat Jan 10 00:00:00 BRT 2009", foundBookOne.getLaunchDate().toString());
+        assertEquals(326L, foundBookOne.getKey());
+        assertEquals("First Nudie Musical, The", foundBookOne.getTitle());
+        assertEquals("Alina", foundBookOne.getAuthor());
+        assertEquals(91.79, foundBookOne.getPrice());
+        assertEquals("Tue Sep 26 00:00:00 BRT 2023", foundBookOne.getLaunchDate().toString());
     }
 
     @Test

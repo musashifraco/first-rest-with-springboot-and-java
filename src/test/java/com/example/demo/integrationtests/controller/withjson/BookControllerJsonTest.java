@@ -4,9 +4,7 @@ import com.example.demo.configs.TestConfigs;
 import com.example.demo.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.example.demo.integrationtests.vo.*;
 import com.example.demo.integrationtests.vo.wrappers.WrapperBookVO;
-import com.example.demo.integrationtests.vo.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -118,7 +116,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(1016L, persistedBook.getKey());
+        assertEquals(1018L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -149,7 +147,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(1016L, persistedBook.getKey());
+        assertEquals(1018L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -183,9 +181,22 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
                 .asString();
 
         WrapperBookVO wrapper = objectMapper.readValue(content, WrapperBookVO.class);
-        var people = wrapper.getEmbedded().getBooks();
+        var book = wrapper.getEmbedded().getBooks();
 
-        BookVO foundPersonOne = people.get(0);
+        BookVO foundBookOne = book.get(0);
+
+        assertNotNull(foundBookOne);
+        assertNotNull(foundBookOne.getKey());
+        assertNotNull(foundBookOne.getTitle());
+        assertNotNull(foundBookOne.getAuthor());
+        assertNotNull(foundBookOne.getPrice());
+        assertNotNull(foundBookOne.getLaunchDate());
+
+        assertEquals(326L, foundBookOne.getKey());
+        assertEquals("First Nudie Musical, The", foundBookOne.getTitle());
+        assertEquals("Alina", foundBookOne.getAuthor());
+        assertEquals(91.79, foundBookOne.getPrice());
+        assertEquals("Tue Sep 26 00:00:00 BRT 2023", foundBookOne.getLaunchDate().toString());
     }
 
     @Test
