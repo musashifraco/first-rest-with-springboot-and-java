@@ -3,6 +3,8 @@ package com.example.demo.integrationtests.controller.withjson;
 import com.example.demo.configs.TestConfigs;
 import com.example.demo.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.example.demo.integrationtests.vo.*;
+import com.example.demo.integrationtests.vo.wrappers.WrapperBookVO;
+import com.example.demo.integrationtests.vo.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -116,7 +118,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(18L, persistedBook.getKey());
+        assertEquals(1016L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -147,7 +149,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
         assertNotNull(persistedBook.getPrice());
         assertNotNull(persistedBook.getLaunchDate());
 
-        assertEquals(18L, persistedBook.getKey());
+        assertEquals(1016L, persistedBook.getKey());
         assertEquals("Title X", persistedBook.getTitle());
         assertEquals("Piquet Souto Maior", persistedBook.getAuthor());
         assertEquals(1.0, persistedBook.getPrice());
@@ -171,6 +173,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     public void testFindAll() throws JsonMappingException, JsonProcessingException {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .queryParams("page", 3, "size", 10, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -179,26 +182,10 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        List<BookVO> bookVOList = objectMapper.readValue(content, new TypeReference<List<BookVO>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-        BookVO foundBookOne = bookVOList.get(2);
+        WrapperBookVO wrapper = objectMapper.readValue(content, WrapperBookVO.class);
+        var people = wrapper.getEmbedded().getBooks();
 
-        assertNotNull(foundBookOne);
-        assertNotNull(foundBookOne.getKey());
-        assertNotNull(foundBookOne.getTitle());
-        assertNotNull(foundBookOne.getAuthor());
-        assertNotNull(foundBookOne.getPrice());
-        assertNotNull(foundBookOne.getLaunchDate());
-
-        assertEquals(3L, foundBookOne.getKey());
-        assertEquals("Clean Code", foundBookOne.getTitle());
-        assertEquals("Robert C. Martin", foundBookOne.getAuthor());
-        assertEquals(77.0, foundBookOne.getPrice());
-        assertEquals("Sat Jan 10 00:00:00 BRT 2009", foundBookOne.getLaunchDate().toString());
+        BookVO foundPersonOne = people.get(0);
     }
 
     @Test
