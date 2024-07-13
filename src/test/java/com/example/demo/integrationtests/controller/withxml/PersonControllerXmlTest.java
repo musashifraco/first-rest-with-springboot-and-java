@@ -275,7 +275,44 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @Order(7)
+    @Order(6)
+    public void findPersonsByName() throws JsonMappingException, JsonProcessingException {
+        var content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
+                .accept(TestConfigs.CONTENT_TYPE_XML)
+                .pathParam("userName", "ona")
+                .queryParams("page", 0, "size", 1, "direction", "asc")
+                .when()
+                .get("findPersonsByName/{userName}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
+
+        PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+        var people = wrapper.getContent();
+
+        PersonVO foundPersonOne = people.get(0);
+
+        assertNotNull(foundPersonOne.getId());
+        assertNotNull(foundPersonOne.getFirstName());
+        assertNotNull(foundPersonOne.getLastName());
+        assertNotNull(foundPersonOne.getAddress());
+        assertNotNull(foundPersonOne.getGender());
+
+        assertTrue(foundPersonOne.getEnabled());
+
+        assertEquals(554, foundPersonOne.getId());
+
+        assertEquals("Cairistiona", foundPersonOne.getFirstName());
+        assertEquals("Sarney", foundPersonOne.getLastName());
+        assertEquals("4 Dakota Terrace", foundPersonOne.getAddress());
+        assertEquals("Female", foundPersonOne.getGender());
+    }
+
+    @Test
+    @Order(8)
     public void testFindAllWithOutToken() throws JsonMappingException, JsonProcessingException {
 
         RequestSpecification specificationWithOutToken = new RequestSpecBuilder()
