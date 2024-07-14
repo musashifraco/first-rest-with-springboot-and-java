@@ -1,7 +1,11 @@
 package com.example.demo.controllers;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +39,16 @@ public class FileController {
         return
                 new UploadFileResponseVO(
                         filename, fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFile")
+    public List<UploadFileResponseVO> uploadMultipleFile(@RequestParam("files") MultipartFile[] files) {
+        logger.info("Storing files to disk");
+
+        return Arrays
+                .asList(files)
+                .stream()
+                .map(file -> uploadFile(file))
+                .collect(Collectors.toList());
     }
 }
