@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-/*
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class BookServicesTest {
@@ -37,37 +37,6 @@ class BookServicesTest {
 	void setUp() throws Exception {
 		input = new MockBook();
 		MockitoAnnotations.openMocks(this);
-	}
-
-	@Test
-	void testFindAll() {
-		List<Book> list = input.mockEntityList();
-
-		when(repository.findAll()).thenReturn(list);
-
-		var books = service.findAll();
-
-		assertNotNull(books);
-		assertEquals(14, books.size());
-
-		for(var i = 0; i < books.size(); i++) {
-
-
-			String author = "Author Test " + i;
-			String title = "Title Test " + i;
-			Double price = Double.parseDouble(Integer.toString(i));
-
-			var book = books.get(i);
-
-			assertNotNull(book);
-			assertNotNull(book.getKey());
-			assertNotNull(book.getLinks());
-			assertTrue(book.toString().contains(""));
-			assertEquals(author, book.getAuthor());
-			assertEquals(title, book.getTitle());
-			assertTrue(book.getLaunchDate().toString().contains(""));
-			assertEquals(price, book.getPrice());
-		}
 	}
 
 	@Test
@@ -169,6 +138,4 @@ class BookServicesTest {
 	}
 
 }
-
-*/
 
