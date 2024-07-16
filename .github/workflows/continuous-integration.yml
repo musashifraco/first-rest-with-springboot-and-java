@@ -35,6 +35,11 @@ jobs:
     - name: Docker Compose Build Application
       working-directory: ./deploy/docker
       run: docker compose build
+
+    - name: Debug environment variables
+      run: |
+       echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}"
+       echo "GITHUB_RUN_ID=${{ github.run_id }}"
       
     - name: Push to Docker Hub Container Registry
       run: |
