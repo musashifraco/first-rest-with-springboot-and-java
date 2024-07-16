@@ -33,7 +33,7 @@ jobs:
       run: mvn clean package -DskipTests
       
     - name: Docker Compose Build Application
-      working-directory: ./first-rest-with-springboot-and-java/deploy/docker
+      working-directory: ./deploy/docker
       run: docker compose build
       
     - name: Push to Docker Hub Container Registry
