@@ -21,6 +21,11 @@ services:
   rest-with-spring-boot-musashifraco:
     image: musashifraco/rest-with-spring-boot-musashifraco
     restart: always
+
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile
+
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest_with_spring_boot_musashifraco?useTimezone=true&serverTimezone=UTC
