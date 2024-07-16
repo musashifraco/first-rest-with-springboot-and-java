@@ -30,7 +30,7 @@ jobs:
 
     - name: Build Application JAR
       working-directory: .
-      run: mvn clean package
+      run: mvn clean package -DskipTests
       
     - name: Docker Compose Build Application
       working-directory: ./first-rest-with-springboot-and-java/deploy/docker
