@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://demo.example.com
 file:
-  upload-dir: /home/zeze/Documentos/UploadDir
+  upload-dir: /home/runner/work/first-rest-with-springboot-and-java/Documentos/UploadDir
 security:
   jwt:
     token:
